@@ -34,7 +34,7 @@ var handle = WindowHandleFinder.getFromActiveWindow();
 ## Adding Taskbar buttons with Java AWT
 To use the library with Java AWT one has to retrieve the window handle to the active main window.
 
-Currently one can use any of the following methods to retrieve such a handle after the JavaFX Stage is shown:
+Currently one can use any of the following methods to retrieve such a handle after the AWT Window is shown:
 ```java
 final Component component = ...;
 var handle = WindowHandleFinder.getFromInternalAWT(component);
