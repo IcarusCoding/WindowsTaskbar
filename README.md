@@ -15,6 +15,9 @@ It currently supports the following features:
 * [Java AWT](https://docs.oracle.com/javase/7/docs/api/java/awt/package-summary.html) integration
 * [JavaFX](https://openjfx.io) integration
 
+# How it looks
+![Test](https://i.imgur.com/k9qDj3H.png)
+
 # Prerequisites
 Java 17 is required to use Windows Taskbar.
 
