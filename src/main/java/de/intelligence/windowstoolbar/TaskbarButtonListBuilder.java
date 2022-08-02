@@ -5,15 +5,15 @@ import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Set;
 
-public final class ToolbarButtonListBuilder {
+public final class TaskbarButtonListBuilder {
 
-    public static ToolbarButtonListBuilder builder() {
-        return new ToolbarButtonListBuilder();
+    public static TaskbarButtonListBuilder builder() {
+        return new TaskbarButtonListBuilder();
     }
 
     private final Set<TaskbarButton> buttons;
 
-    private ToolbarButtonListBuilder() {
+    private TaskbarButtonListBuilder() {
         this.buttons = new HashSet<>();
     }
 
@@ -32,7 +32,7 @@ public final class ToolbarButtonListBuilder {
 
     public static class TaskbarButtonBuilder {
 
-        private final ToolbarButtonListBuilder toolbarButtonListBuilder;
+        private final TaskbarButtonListBuilder taskbarButtonListBuilder;
 
         private Icon icon;
         private String tooltip;
@@ -40,14 +40,14 @@ public final class ToolbarButtonListBuilder {
 
         private ITaskbarButtonClickListener listener = evt -> {};
 
-        private TaskbarButtonBuilder(ToolbarButtonListBuilder toolbarButtonListBuilder) {
-            this.toolbarButtonListBuilder = toolbarButtonListBuilder;
+        private TaskbarButtonBuilder(TaskbarButtonListBuilder taskbarButtonListBuilder) {
+            this.taskbarButtonListBuilder = taskbarButtonListBuilder;
             this.flags = EnumSet.noneOf(TaskbarButtonFlag.class);
         }
 
-        public ToolbarButtonListBuilder build() {
-            this.toolbarButtonListBuilder.addButton(new TaskbarButton(this.icon, this.tooltip, this.flags, this.listener));
-            return this.toolbarButtonListBuilder;
+        public TaskbarButtonListBuilder build() {
+            this.taskbarButtonListBuilder.addButton(new TaskbarButton(this.icon, this.tooltip, this.flags, this.listener));
+            return this.taskbarButtonListBuilder;
         }
 
         public TaskbarButtonBuilder setIcon(Icon icon) {

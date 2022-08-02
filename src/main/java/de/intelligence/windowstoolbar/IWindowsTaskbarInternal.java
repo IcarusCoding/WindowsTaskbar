@@ -1,8 +1,5 @@
 package de.intelligence.windowstoolbar;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.sun.jna.Structure;
 import com.sun.jna.platform.win32.WinDef;
 import com.sun.jna.platform.win32.WinNT;
@@ -13,18 +10,42 @@ sealed interface IWindowsTaskbarInternal permits WindowsTaskbarInternal {
 
     WinNT.HRESULT HrInit();
 
+    WinNT.HRESULT AddTab(WinDef.HWND hWnd, WinDef.HWND hWnd2);
+
+    WinNT.HRESULT SetProgressValue(WinDef.HWND hWnd, int ullCompleted, int ullTotal);
+
+    WinNT.HRESULT SetProgressState(WinDef.HWND hWnd, int tbpFlags);
+
     WinNT.HRESULT ThumbBarAddButtons(WinDef.HWND hWnd, int cButtons, THUMBBUTTON[] pButton);
 
     WinNT.HRESULT ThumbBarUpdateButtons(WinDef.HWND hWnd, int cButtons, THUMBBUTTON[] pButton);
 
+    WinNT.HRESULT SetTabOrder(WinDef.HWND hWndTab, WinDef.HWND hWndInsertBefore);
+
     interface VTable {
 
         int HrInit = 0x03;
+        int AddTab = 0x0B;
+        int SetProgressValue = 0x09;
+        int SetProgressState = 0x0A;
         int ThumbBarAddButtons = 0x0F;
         int ThumbBarUpdateButtons = 0x10;
 
+        int SetTabOrder = 0x0D;
+
     }
 
+    interface TBPFLAG {
+
+        int TBPF_NOPROGRESS = 0x00;
+        int TBPF_INDETERMINATE  = 0x01;
+        int TBPF_NORMAL  = 0x02;
+        int TBPF_ERROR  = 0x04;
+        int TBPF_PAUSED  = 0x08;
+
+    }
+
+    @Structure.FieldOrder({"dwMask", "iId", "iBitmap", "hIcon", "szTip", "dwFlags"})
     class THUMBBUTTON extends Structure {
 
         public static final int MAX_TOOLTIP_LENGTH = 260;
@@ -35,11 +56,6 @@ sealed interface IWindowsTaskbarInternal permits WindowsTaskbarInternal {
         public WinDef.HICON hIcon;
         public char[] szTip = new char[MAX_TOOLTIP_LENGTH];
         public int dwFlags;
-
-        @Override
-        protected List<String> getFieldOrder() {
-            return Arrays.asList("dwMask", "iId", "iBitmap", "hIcon", "szTip", "dwFlags");
-        }
 
         interface THUMBBUTTONMASK {
 

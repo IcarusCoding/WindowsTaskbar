@@ -15,6 +15,12 @@ import de.intelligence.windowstoolbar.exceptions.NotInitializedException;
 
 public final class WindowsTaskbar implements IWindowsTaskbar {
 
+    static {
+        if (!System.getProperty("os.name", "").startsWith("Windows")) {
+            throw new InvalidOperatingSystemException();
+        }
+    }
+
     private final LinkedHashMap<TaskbarButton, IWindowsTaskbarInternal.THUMBBUTTON> buttons;
     private final WinDef.HWND hwnd;
     private final INativeIconHandler nativeIconHandler;
@@ -40,6 +46,35 @@ public final class WindowsTaskbar implements IWindowsTaskbar {
         }
         this.windowsTaskbarInternal = WindowsTaskbarInternal.getInstance();
         this.initialized = true;
+    }
+
+    @Override
+    public void addTab(WinDef.HWND hWnd, WinDef.HWND hWnd2) {
+        this.windowsTaskbarInternal.AddTab(hWnd, hWnd2);
+    }
+
+    @Override
+    public void setTabOrder(WinDef.HWND hWnd, WinDef.HWND hWnd2) {
+        this.windowsTaskbarInternal.SetTabOrder(hWnd, hWnd2);
+    }
+
+    @Override
+    public void setProgressValue(TaskbarProgressState progressState, int progress) {
+        if (!this.initialized) {
+            throw new NotInitializedException("Taskbar not initialized");
+        }
+        Conditions.checkState(progressState != TaskbarProgressState.NO_PROGRESS && progressState != TaskbarProgressState.INDETERMINATE,
+                "Can not set the progress value of an indeterminate state");
+        this.setProgressState(progressState);
+        this.windowsTaskbarInternal.SetProgressValue(this.hwnd, progress, 100);
+    }
+
+    @Override
+    public void setProgressState(TaskbarProgressState progressState) {
+        if (!this.initialized) {
+            throw new NotInitializedException("Taskbar not initialized");
+        }
+        this.windowsTaskbarInternal.SetProgressState(this.hwnd, progressState.getFlag());
     }
 
     @Override
@@ -93,6 +128,11 @@ public final class WindowsTaskbar implements IWindowsTaskbar {
     @Override
     public void overrideWndProcCallback() {
         this.override = new WndProcCallbackOverride(this.hwnd, this);
+    }
+
+    @Override
+    public void setVisibleInTaskbar(boolean visible) {
+        User32.INSTANCE.SetWindowLongPtrA(this.hwnd, -20, User32.INSTANCE.GetWindowLongPtrA(this.hwnd, -20).longValue() | 0x80);
     }
 
     private IWindowsTaskbarInternal.THUMBBUTTON[] createButtonArray(Collection<TaskbarButton> buttons) {

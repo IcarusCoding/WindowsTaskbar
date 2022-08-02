@@ -17,6 +17,8 @@ public final class TaskbarBuilder {
     private boolean autoInit;
     private boolean overrideWndProc;
     private INativeIconHandler nativeIconHandler;
+    private TaskbarProgressState progressState;
+    private int progress;
 
     private TaskbarBuilder() {
         this.buttons = new HashSet<>();
@@ -36,6 +38,13 @@ public final class TaskbarBuilder {
         if (this.autoInit) {
             taskbar.init();
         }
+        if (this.progressState != null) {
+            if (this.progress != 0) {
+               taskbar.setProgressValue(this.progressState, this.progress);
+            } else {
+                taskbar.setProgressState(this.progressState);
+            }
+        }
         if (!this.buttons.isEmpty()) {
             //TODO add init listener to taskbar
             taskbar.setButtons(this.buttons);
@@ -50,6 +59,17 @@ public final class TaskbarBuilder {
 
     public TaskbarBuilder autoInit() {
         this.autoInit = true;
+        return this;
+    }
+
+    public TaskbarBuilder withInitialProgressState(TaskbarProgressState progressState) {
+        this.progressState = progressState;
+        return this;
+    }
+
+    public TaskbarBuilder withInitialProgressState(TaskbarProgressState progressState, int progress) {
+        this.progressState = progressState;
+        this.progress = Math.max(0, Math.min(100, progress));
         return this;
     }
 

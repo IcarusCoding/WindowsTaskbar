@@ -26,4 +26,30 @@
         </dependency>
     </dependencies>
 
+    <distributionManagement>
+        <repository>
+            <id>teragam-repo</id>
+            <name>IcarusCoding Repository</name>
+            <url>https://archiva.teragam.de/repository/IcarusCoding/</url>
+        </repository>
+    </distributionManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>

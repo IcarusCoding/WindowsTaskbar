@@ -22,7 +22,9 @@ public interface User32 extends StdCallLibrary {
 
     WinDef.BOOL DestroyIcon(WinDef.HICON hIcon);
 
-    BaseTSD.LONG_PTR SetWindowLongPtrA(WinDef.HWND hWnd, int nIndex, WndProcCallback dwNewLong);
+    BaseTSD.LONG_PTR GetWindowLongPtrA(WinDef.HWND hWnd, int nIndex);
+
+    BaseTSD.LONG_PTR SetWindowLongPtrA(WinDef.HWND hWnd, int nIndex, Object dwNewLong);
 
     WinDef.LRESULT CallWindowProcA(BaseTSD.LONG_PTR lpPrevWndFunc, WinDef.HWND hWnd, int uMsg, WinDef.WPARAM wParam, WinDef.LPARAM lParam);
 
