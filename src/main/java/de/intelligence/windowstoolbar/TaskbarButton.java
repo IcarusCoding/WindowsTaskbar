@@ -2,6 +2,7 @@ package de.intelligence.windowstoolbar;
 
 import java.util.EnumSet;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public final class TaskbarButton {
@@ -44,6 +45,21 @@ public final class TaskbarButton {
 
     public EnumSet<TaskbarButtonFlag> getFlags() {
         return EnumSet.copyOf(this.flags);
+    }
+
+    public void setFlags(EnumSet<TaskbarButtonFlag> flags) {
+        this.flags.clear();
+        this.flags.addAll(flags);
+    }
+
+    public void setDisabled(boolean disabled) {
+        this.flags.remove(TaskbarButtonFlag.DISABLED);
+        this.flags.remove(TaskbarButtonFlag.ENABLED);
+        if (disabled) {
+            this.flags.add(TaskbarButtonFlag.DISABLED);
+        } else {
+            this.flags.add(TaskbarButtonFlag.ENABLED);
+        }
     }
 
     ITaskbarButtonClickListener getListener() {
