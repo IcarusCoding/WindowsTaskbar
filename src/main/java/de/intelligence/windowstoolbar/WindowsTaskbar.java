@@ -49,16 +49,6 @@ public final class WindowsTaskbar implements IWindowsTaskbar {
     }
 
     @Override
-    public void addTab(WinDef.HWND hWnd, WinDef.HWND hWnd2) {
-        this.windowsTaskbarInternal.AddTab(hWnd, hWnd2);
-    }
-
-    @Override
-    public void setTabOrder(WinDef.HWND hWnd, WinDef.HWND hWnd2) {
-        this.windowsTaskbarInternal.SetTabOrder(hWnd, hWnd2);
-    }
-
-    @Override
     public void setProgressValue(TaskbarProgressState progressState, int progress) {
         if (!this.initialized) {
             throw new NotInitializedException("Taskbar not initialized");
@@ -128,11 +118,6 @@ public final class WindowsTaskbar implements IWindowsTaskbar {
     @Override
     public void overrideWndProcCallback() {
         this.override = new WndProcCallbackOverride(this.hwnd, this);
-    }
-
-    @Override
-    public void setVisibleInTaskbar(boolean visible) {
-        User32.INSTANCE.SetWindowLongPtrA(this.hwnd, -20, User32.INSTANCE.GetWindowLongPtrA(this.hwnd, -20).longValue() | 0x80);
     }
 
     private IWindowsTaskbarInternal.THUMBBUTTON[] createButtonArray(Collection<TaskbarButton> buttons) {

@@ -10,8 +10,6 @@ sealed interface IWindowsTaskbarInternal permits WindowsTaskbarInternal {
 
     WinNT.HRESULT HrInit();
 
-    WinNT.HRESULT AddTab(WinDef.HWND hWnd, WinDef.HWND hWnd2);
-
     WinNT.HRESULT SetProgressValue(WinDef.HWND hWnd, int ullCompleted, int ullTotal);
 
     WinNT.HRESULT SetProgressState(WinDef.HWND hWnd, int tbpFlags);
@@ -19,8 +17,6 @@ sealed interface IWindowsTaskbarInternal permits WindowsTaskbarInternal {
     WinNT.HRESULT ThumbBarAddButtons(WinDef.HWND hWnd, int cButtons, THUMBBUTTON[] pButton);
 
     WinNT.HRESULT ThumbBarUpdateButtons(WinDef.HWND hWnd, int cButtons, THUMBBUTTON[] pButton);
-
-    WinNT.HRESULT SetTabOrder(WinDef.HWND hWndTab, WinDef.HWND hWndInsertBefore);
 
     interface VTable {
 

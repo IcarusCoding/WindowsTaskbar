@@ -46,12 +46,6 @@ final class WindowsTaskbarInternal extends Unknown implements IWindowsTaskbarInt
     }
 
     @Override
-    public WinNT.HRESULT AddTab(WinDef.HWND hWnd, WinDef.HWND hWnd2) {
-        return this.validateAndReturn((WinNT.HRESULT) super._invokeNativeObject(VTable.AddTab,
-                new Object[] {this.pComInstance, hWnd, hWnd2}, WinNT.HRESULT.class));
-    }
-
-    @Override
     public WinNT.HRESULT SetProgressValue(WinDef.HWND hWnd, int ullCompleted, int ullTotal) {
         return this.validateAndReturn((WinNT.HRESULT) super._invokeNativeObject(VTable.SetProgressValue,
                 new Object[] {this.pComInstance, hWnd, ullCompleted, ullTotal}, WinNT.HRESULT.class));
@@ -73,12 +67,6 @@ final class WindowsTaskbarInternal extends Unknown implements IWindowsTaskbarInt
     public WinNT.HRESULT ThumbBarUpdateButtons(WinDef.HWND hWnd, int cButtons, THUMBBUTTON[] pButton) {
         return this.validateAndReturn((WinNT.HRESULT) super._invokeNativeObject(VTable.ThumbBarUpdateButtons,
                 new Object[] {this.pComInstance, hWnd, cButtons, pButton}, WinNT.HRESULT.class));
-    }
-
-    @Override
-    public WinNT.HRESULT SetTabOrder(WinDef.HWND hWndTab, WinDef.HWND hWndInsertBefore) {
-        return this.validateAndReturn((WinNT.HRESULT) super._invokeNativeObject(VTable.SetTabOrder,
-                new Object[] {this.pComInstance, hWndTab, hWndInsertBefore}, WinNT.HRESULT.class));
     }
 
     private WinNT.HRESULT validateAndReturn(WinNT.HRESULT hResult) {
